@@ -5,6 +5,7 @@ import {
   SimpleMilestone,
 } from './githubHelper';
 import { GitlabHelper, GitLabIssue, GitLabMilestone } from './gitlabHelper';
+import { BitbucketHelper } from './bitbucketHelper';
 import settings from '../settings';
 
 import { Octokit as GitHubApi } from '@octokit/rest';
@@ -94,9 +95,12 @@ const githubHelper = new GithubHelper(
   settings.useIssuesForAllMergeRequests
 );
 
+// Bitbucket migration integration
+const bitbucketHelper = settings.bitbucket ? new BitbucketHelper(settings.bitbucket.token) : null;
+
 // If no project id is given in settings.js, just return
 // all of the projects that this user is associated with.
-if (!settings.gitlab.projectId) {
+if (!settings.gitlab.projectId && !settings.bitbucket) { // Check for Bitbucket settings
   gitlabHelper.listProjects();
 } else {
   // user has chosen a project

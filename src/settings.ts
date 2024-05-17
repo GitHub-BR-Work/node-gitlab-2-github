@@ -2,6 +2,7 @@ export default interface Settings {
   dryRun: boolean;
   gitlab: GitlabSettings;
   github: GithubSettings;
+  bitbucket?: BitbucketSettings; // Added Bitbucket settings
   usermap: {
     [key: string]: string;
   };
@@ -54,6 +55,12 @@ export interface GitlabSettings {
   projectId: number;
   listArchivedProjects?: boolean;
   sessionCookie: string;
+}
+
+export interface BitbucketSettings { // Added Bitbucket settings interface
+  token: string;
+  workspace: string;
+  repoSlug: string;
 }
 
 export interface S3Settings {
